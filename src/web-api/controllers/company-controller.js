@@ -3,7 +3,7 @@ import * as companyService from '../../domain/services/company-service';
 export const getCompanies = async (req, res, next) => {
   // #swagger.tags = ['partner']
   // #swagger.description = "Obtener partner"
-  // #swagger.deprecated = false 
+  // #swagger.deprecated = false
   try {
     // const { limit: limit } = req.query;
     let response = await companyService.getCompanies();
@@ -13,6 +13,26 @@ export const getCompanies = async (req, res, next) => {
     /* #swagger.responses[500] = { 
       schema: {  $ref: '#/definitions/DefaultError' }
     } */
+    res.status(200).json(response);
+  } catch (error) {
+    // Forma para pasar al exception handler
+    next(error);
+  }
+};
+
+export const getCompany = async (req, res, next) => {
+  // #swagger.tags = ['partner']
+  // #swagger.description = "Obtener partner"
+  // #swagger.deprecated = false
+  try {
+    const { partnerCode: partnerCode } = req.params;
+    let response = await companyService.getCompany(partnerCode);
+    /* #swagger.responses[200] = { 
+        schema: {  $ref: '#/definitions/Partner' }
+      } */
+    /* #swagger.responses[500] = { 
+        schema: {  $ref: '#/definitions/DefaultError' }
+      } */
     res.status(200).json(response);
   } catch (error) {
     // Forma para pasar al exception handler

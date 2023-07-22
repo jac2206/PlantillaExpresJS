@@ -1,0 +1,78 @@
+name: pco-conciliator-back
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+trigger:
+#- dev
+  - none
+
+variables:
+  - name: environment
+    ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
+      value: 'prod'
+    ${{ if eq(variables['Build.SourceBranchName'], 'uat') }}:
+      value: 'uat'
+    ${{ if eq(variables['Build.SourceBranchName'], 'dev') }}:
+      value: 'dev'
+
+  - group: ${{ variables.environment }}-${{ variables['Build.Repository.Name'] }}
+  - template: build-args.yml
+  - group: shared
+
+resources:
+  repositories:
+    - repository: templates
+      ref: 'refs/heads/master'
+      type: git
+      name: DevOps360/pipelines-templates
+
+stages:
+  # - stage: 'Test'
+  #   displayName: Test
+  #   jobs:
+  #     - template: stable/test/node-test-base-update-prueba.yml@test
+  #       parameters:
+  #         sonarQubeLoginToken: $(sonarQubeLoginToken)
+  #         commandToExecuteTests: 'run test' 
+  #         fileenv: 'env-local-middleware.zip'
+  #         unitTestsPath: '$(Build.Repository.LocalPath)/tests'
+  #         sourceFolder: '$(Build.Repository.LocalPath)/src'
+  #         nodeVersion: '16.x'
+
+  # - stage: 'Security'
+  #   displayName: Security Test
+  #   #dependsOn: Test
+  #   jobs:
+  #     - template: stable/test/fluid-attacks-test-base-stable.yml@templates
+  #       parameters:
+  #         token_fluidattack: $(fluidAttacksToken)
+  #         breakPoint: '6.9'
+  #         repoName: $(Build.Repository.Name)
+  
+  - stage: 'Build'
+    displayName: '${{ variables.environment }} - Build'
+    #dependsOn: Security
+    jobs:
+      - template: stable/build/container-build-base-stable.yml@templates
+        parameters:
+          environment: '${{ variables.environment }}'
+          awsAccountId: '$(awsAccountId-dev)'
+          awsRegion: $(awsRegion)
+          dockerfileRoute: '$(Build.SourcesDirectory)/Dockerfile'
+          awsCredentials: 'AWSCT-PCO-USERCLOUDFORMATION-${{upper(variables.environment)}}'
+          envVariables: '${{ variables.environmentVariables }}'
+          certificatesToDownload: cert-pco-conciliator-back.zip
+          certificatesPath: '$(Build.SourcesDirectory)/src/config/certs'
+
+
+  - stage: 'Deployment'
+    displayName: '${{ variables.environment }} - Deployment'  
+    jobs:
+      - template: stable/deploy/kubernetes-rollout-base-stable.yml@templates
+        parameters:
+          environmentK8s: '${{ variables.environment }}'
+          deploymentName: '$(Build.Repository.Name)-${{ variables.environment }}'
+          nameSpace: 'confac'
+          serviceConnectionName: 'AWSCT-PCO-USERCLOUDFORMATION-${{upper(variables.environment)}}'
+

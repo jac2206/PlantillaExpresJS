@@ -1,0 +1,32 @@
+{
+    "env": {
+      "node": true,
+      "commonjs": true,
+      "browser": true,
+      "es2020": true
+    },
+    "extends": ["eslint:recommended"],
+    "overrides": [],
+    "plugins": ["import"],
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "globals": {
+      "process": "writable"
+    },
+    "ignorePatterns": [],
+    "rules": {
+      "strict": ["error", "never"],
+      "quotes": ["error", "single"],
+      // we want to force semicolons
+      "semi": ["error", "always"],
+      // we use 2 spaces to indent our code
+      "indent": ["error", 2],
+      // we want to avoid extraneous spaces
+      "no-multi-spaces": ["error"],
+      "no-unused-vars": "error",
+      "no-process-env": "off"
+    }
+  }
+  

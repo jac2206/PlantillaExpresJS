@@ -1,0 +1,9 @@
+node_modules/
+*.log
+*.DS_Store
+package-lock.json
+*.env
+
+# Config Paths
+*.p12
+*.crt

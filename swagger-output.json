@@ -1,0 +1,409 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "ExpressJS API Template",
+    "description": "ExpressJS API Template"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    },
+    {
+      "url": "https://localhost:3000/"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "description": "App health check",
+        "responses": {
+          "200": {
+            "description": "App running successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "ExpressJS API Template"
+                    },
+                    "release": {
+                      "type": "string",
+                      "example": "v1.0.0"
+                    },
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "ExpressJS API Template"
+                    },
+                    "release": {
+                      "type": "string",
+                      "example": "v1.0.0"
+                    },
+                    "status": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  },
+                  "xml": {
+                    "name": "main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pokemon/{nombre}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBalance"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBalance"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/DefaultError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GetBalance": {
+        "type": "object",
+        "properties": {
+          "allowAccrual": {
+            "type": "boolean",
+            "example": true
+          },
+          "allowRedemption": {
+            "type": "boolean",
+            "example": true
+          },
+          "email": {
+            "type": "string",
+            "example": "s************e@p************a.com"
+          },
+          "mainBalance": {
+            "type": "object",
+            "properties": {
+              "pointsValueInMoney": {
+                "type": "number",
+                "example": 34529040
+              },
+              "expiringPoints": {
+                "type": "number",
+                "example": 4923849
+              },
+              "pointsAmount": {
+                "type": "number",
+                "example": 4932720
+              },
+              "pointsMoneyRatio": {
+                "type": "number",
+                "example": 7
+              },
+              "expirationDate": {
+                "type": "string",
+                "example": "2023-10-31"
+              }
+            }
+          },
+          "mobilePhoneNo": {
+            "type": "string",
+            "example": "313****311"
+          },
+          "name": {
+            "type": "string",
+            "example": "FirstName LastName"
+          },
+          "totpActive": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "xml": {
+          "name": "GetBalance"
+        }
+      },
+      "ProcessPayments": {
+        "type": "object",
+        "properties": {},
+        "xml": {
+          "name": "ProcessPayments"
+        }
+      },
+      "Partner": {
+        "type": "object",
+        "properties": {
+          "partnerId": {
+            "type": "string",
+            "example": "3ba64ed0-0257-4974-b549-183c5a0737da"
+          },
+          "partnerCode": {
+            "type": "string",
+            "example": "1037630472"
+          },
+          "name": {
+            "type": "string",
+            "example": "Jac Bebidas SAS"
+          },
+          "contactData": {
+            "type": "object",
+            "properties": {
+              "phone": {
+                "type": "string",
+                "example": "+57604999999"
+              },
+              "address": {
+                "type": "string",
+                "example": "Dirección de residencia Cll x Crr"
+              },
+              "country": {
+                "type": "string",
+                "example": "CO"
+              },
+              "celphone": {
+                "type": "string",
+                "example": "+5730099999"
+              },
+              "cityCode": {
+                "type": "string",
+                "example": "05631"
+              },
+              "cityName": {
+                "type": "string",
+                "example": "Medellín"
+              },
+              "regionCode": {
+                "type": "string",
+                "example": "05"
+              },
+              "regionName": {
+                "type": "string",
+                "example": "Antioquia"
+              },
+              "neighbourhood": {
+                "type": "string",
+                "example": ""
+              },
+              "geolocalization": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "number",
+                    "example": 6.1633199
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "example": -75.5966299
+                  }
+                }
+              }
+            }
+          },
+          "verificationDigit": {
+            "type": "number",
+            "example": 1
+          },
+          "commercialName": {
+            "type": "string",
+            "example": "prueba"
+          },
+          "status": {
+            "type": "boolean",
+            "example": true
+          },
+          "email": {
+            "type": "string",
+            "example": "example@example.com"
+          },
+          "webSite": {
+            "type": "string",
+            "example": "www.example.com"
+          },
+          "type": {
+            "type": "string",
+            "example": "A"
+          },
+          "pointsMoneyRatio": {
+            "type": "number",
+            "example": 6
+          },
+          "billingType": {
+            "type": "string",
+            "example": "B"
+          },
+          "accumulationPeriod": {
+            "type": "string",
+            "example": "M"
+          },
+          "initDate": {
+            "type": "string",
+            "example": "2023-05-03T17:00:00.000Z"
+          },
+          "endDate": {
+            "type": "string",
+            "example": "2023-05-03T17:00:00.000Z"
+          },
+          "lastUpdate": {
+            "type": "string",
+            "example": "2023-05-03T17:00:00.000Z"
+          },
+          "currency": {
+            "type": "string",
+            "example": "COP"
+          },
+          "isPartner": {
+            "type": "boolean",
+            "example": true
+          },
+          "paymentInformation": {
+            "type": "object",
+            "properties": {}
+          },
+          "additionalInfo": {
+            "type": "object",
+            "properties": {}
+          },
+          "categories": {
+            "type": "array",
+            "example": [],
+            "items": {}
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "idProducto": {
+                  "type": "number",
+                  "example": 1
+                },
+                "productName": {
+                  "type": "string",
+                  "example": "SC"
+                }
+              }
+            }
+          },
+          "locations": {},
+          "business": {
+            "type": "array",
+            "example": [
+              "SC",
+              "LAAS"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "codeType": {
+            "type": "string",
+            "example": "NIT"
+          },
+          "category": {
+            "type": "string",
+            "example": "Salud"
+          }
+        },
+        "xml": {
+          "name": "Partner"
+        }
+      },
+      "DefaultError": {
+        "type": "object",
+        "properties": {
+          "resultCode": {
+            "type": "string",
+            "example": "SOME_RESULT_CODE"
+          },
+          "resultMsg": {
+            "type": "string",
+            "example": "Some result detail message."
+          }
+        },
+        "xml": {
+          "name": "DefaultError"
+        }
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://apinp.puntoscolombia.com:8443/auth/oauth/v2/token",
+            "scopes": {}
+          }
+        }
+      },
+      "Authorization": {
+        "type": "Bearer",
+        "in": "header",
+        "name": "Bearer Token"
+      }
+    }
+  }
+}

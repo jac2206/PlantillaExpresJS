@@ -10,6 +10,18 @@ export const config = {
       getPokemon: process.env.GET_POKEMON,
     },
   },
+  SQLServer:{
+    user: process.env.SQLSERVER_USER,
+    server: process.env.SQLSERVER_HOST,
+    database: process.env.SQLSERVERS_DB,
+    password: process.env.SQLSERVER_PASS,
+    options : {
+      // port : parseInt(process.env.SQLSERVER_PORT),
+      enableArithAbort: true,
+      encrypt: false, // Deshabilita el cifrado
+      trustServerCertificate: true, // Acepta el certificado autofirmado
+    }
+  }
 //   hstsMaxAge: process.env.HSTS_MAX_AGE,
 //   aws: { 
 //     region: process.env.AWS_REGION,

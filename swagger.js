@@ -21,7 +21,7 @@ const doc = {
       type: 'oauth2',
       flows: {
         clientCredentials: {
-          tokenUrl: 'https://apinp.puntoscolombia.com:8443/auth/oauth/v2/token',
+          tokenUrl: '',
           scopes: {},
         },
       },

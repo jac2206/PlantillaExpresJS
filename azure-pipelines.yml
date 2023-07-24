@@ -1,4 +1,4 @@
-name: pco-conciliator-back
+name: conciliator-back
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -60,9 +60,9 @@ stages:
           awsAccountId: '$(awsAccountId-dev)'
           awsRegion: $(awsRegion)
           dockerfileRoute: '$(Build.SourcesDirectory)/Dockerfile'
-          awsCredentials: 'AWSCT-PCO-USERCLOUDFORMATION-${{upper(variables.environment)}}'
+          awsCredentials: 'AWSCT-USERCLOUDFORMATION-${{upper(variables.environment)}}'
           envVariables: '${{ variables.environmentVariables }}'
-          certificatesToDownload: cert-pco-conciliator-back.zip
+          certificatesToDownload: cert-conciliator-back.zip
           certificatesPath: '$(Build.SourcesDirectory)/src/config/certs'
 
 
@@ -74,5 +74,5 @@ stages:
           environmentK8s: '${{ variables.environment }}'
           deploymentName: '$(Build.Repository.Name)-${{ variables.environment }}'
           nameSpace: 'confac'
-          serviceConnectionName: 'AWSCT-PCO-USERCLOUDFORMATION-${{upper(variables.environment)}}'
+          serviceConnectionName: 'AWSCT-USERCLOUDFORMATION-${{upper(variables.environment)}}'
 
